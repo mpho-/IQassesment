@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "TIPyrnbxA0ZAh2lvpRgqdORlGVVUkCJmc6Qy8QZMLz1JmHfHXWPzqY9jDGOzZhLdyrSzKIxmb4+f7g7ILP8Apg==",
+  "dgSpecHash": "/jn4zm33DA0erTpAR1fvqaLrO0R7O0CKOhMUTysT5UArdnux+Ecd+8ZXyfC44RSNt/q6lFBN+VK+1/K8QSRG4w==",
   "success": true,
   "projectFilePath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mpho\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\mpho\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\mpho\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\mpho\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
     "C:\\Users\\mpho\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\mpho\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\mpho\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",

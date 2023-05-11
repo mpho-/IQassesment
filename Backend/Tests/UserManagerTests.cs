@@ -1,5 +1,7 @@
+using ACMEIndustries.Database;
 using ACMEIndustries.Models;
 using BusinessLogic;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace BusinessLogicTests
@@ -7,13 +9,12 @@ namespace BusinessLogicTests
     [TestFixture]
     public class UserManagerTests
     {
-        private UserManager _userManager;
-
+        private IUserManager _userManager;
         [SetUp]
         public void Setup()
         {
-            // Arrange
-            _userManager = new UserManager();
+            var configuration = new ConfigurationBuilder().Build();
+            _userManager = new UserManager(new ApplicationDbContext(), configuration);
         }
 
         [Test]

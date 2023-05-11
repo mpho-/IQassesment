@@ -1,0 +1,26 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "FirstName": "Mpho",
+      "Lastname": "Mathivha",
+      "EmailAddress": "mpho@example.com",
+      "Password": "test",
+      "DateCreated": "2009-05-08 14:40:52",
+      "Roles": [ "Mananger" ]
+    }
+  ],
+  "Roles": [
+    {
+      "Name": "Manager"
+    },
+    {
+      "Name": "Employee"
+    }
+  ],
+  "Projects": [
+    {
+      "Name": "Manager"
+    }
+  ]
+}

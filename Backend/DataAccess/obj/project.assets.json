@@ -61,11 +61,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\DataAccess\\DataAccess.csproj",
+      "projectPath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\mpho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

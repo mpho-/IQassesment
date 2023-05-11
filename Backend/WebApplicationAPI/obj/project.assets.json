@@ -990,11 +990,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\WebApplicationAPI\\WebApplicationAPI.csproj",
+      "projectUniqueName": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\WebApplicationAPI\\WebApplicationAPI.csproj",
       "projectName": "WebApplicationAPI",
-      "projectPath": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\WebApplicationAPI\\WebApplicationAPI.csproj",
+      "projectPath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\WebApplicationAPI\\WebApplicationAPI.csproj",
       "packagesPath": "C:\\Users\\mpho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\WebApplicationAPI\\obj\\",
+      "outputPath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\WebApplicationAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1014,8 +1014,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\mpho\\source\\repos\\ACMEIndustries\\Backend\\BusinessLogic\\BusinessLogic.csproj"
+            "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\BusinessLogic\\BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\mpho\\source\\repos\\IQ\\IQassesment\\Backend\\BusinessLogic\\BusinessLogic.csproj"
             }
           }
         }

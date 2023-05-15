@@ -10,6 +10,12 @@ import { CreateEditUserComponent } from './core/components/create-edit-user/crea
 import { LoginComponent } from './core/components/login/login.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
 import { AuthGuard } from './core/guards/AuthGuard';
+import { RoleComponent } from './core/components/roles/roles.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { CreateRoleComponent } from './core/components/create-role/create-role.component';
 
 @NgModule({
   declarations: [
@@ -18,14 +24,20 @@ import { AuthGuard } from './core/guards/AuthGuard';
     AdministrationComponent,
     ProfileComponent,
     LoginComponent,
-    CreateEditUserComponent
+    CreateEditUserComponent,
+    RoleComponent,
+    CreateRoleComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgSelectModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     AuthGuard,

@@ -2,38 +2,38 @@
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <h1>Profile</h1>
+      <div class="text-center">
+        <img *ngIf="user!.profilePicture" [src]="uploadUrl" class="avatar">
+        <img *ngIf="user!.profilePicture == null" src="assets/profile.jpg" class="avatar">
+      </div>
       <form>
         <div class="form-group">
           <label for="firstName">First Name:</label>
-          <input [readonly]="true" type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="user.firstName">
+          <input [readonly]="true" type="text" id="firstName" name="firstName" class="form-control" [(ngModel)]="user!.firstName">
         </div>
         <div class="form-group">
           <label for="lastName">Last Name:</label>
-          <input [readonly]="true" type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="user.lastName">
+          <input [readonly]="true" type="text" id="lastName" name="lastName" class="form-control" [(ngModel)]="user!.lastName">
         </div>
         <div class="form-group">
           <label for="emailAddress">Email Address:</label>
-          <input [readonly]="true" type="email" id="emailAddress" name="emailAddress" class="form-control" [(ngModel)]="user.emailAddress">
+          <input [readonly]="true" type="email" id="emailAddress" name="emailAddress" class="form-control" [(ngModel)]="user!.emailAddress">
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input [readonly]="true" type="password" id="password" name="password" class="form-control" [(ngModel)]="user.password">
+          <input [readonly]="true" type="password" id="password" name="password" class="form-control" [(ngModel)]="user!.password">
         </div>
         <div class="form-group">
           <label for="gender">Gender:</label>
-          <select id="gender" name="gender" class="form-control" [(ngModel)]="user.gender">
-            <option value="0">Male</option>
-            <option value="1">Female</option>
-            <option value="2">Other</option>
-          </select>
+          <input [readonly]="true" type="text" id="password" name="password" class="form-control" [(ngModel)]="user!.gender">
         </div>
         <div class="form-group">
           <label for="age">Age:</label>
-          <input [readonly]="true" type="number" id="age" name="age" class="form-control" [(ngModel)]="user.age">
+          <input [readonly]="true" type="number" id="age" name="age" class="form-control" [(ngModel)]="user!.age">
         </div>
         <div class="form-group">
           <label for="address">Address:</label>
-          <textarea [readonly]="true" id="address" name="address" class="form-control" [(ngModel)]="user.address"></textarea>
+          <textarea [readonly]="true" id="address" name="address" class="form-control" [(ngModel)]="user!.address"></textarea>
         </div>
       </form>
     </div>

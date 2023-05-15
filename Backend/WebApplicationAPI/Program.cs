@@ -1,7 +1,10 @@
 using ACMEIndustries.Database;
 using AutoMapper;
 using BusinessLogic;
+using BusinessLogic.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebAPI;
@@ -9,8 +12,10 @@ using WebAPI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+Directory.SetCurrentDirectory(System.AppDomain.CurrentDomain.BaseDirectory);
 builder.Services.AddControllers();
+builder.Logging.ClearProviders();
+builder.Logging.AddLog4Net();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +38,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddTransient(typeof(IApplicationDbContext), typeof(ApplicationDbContext));
 builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddScoped<IRoleManager, RolesManager>();
+builder.Services.AddScoped<IProjectManager, ProjectManager>();
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
@@ -55,6 +62,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 

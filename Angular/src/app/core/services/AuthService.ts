@@ -15,7 +15,7 @@ export class AuthService {
 
     login(emailAddress: string, password: string): Observable<any> {
         const body = { emailAddress, password };
-        return this.http.post(`/Authenticate/SignIn`, body).pipe(
+        return this.http.post(`/api/Authenticate/SignIn`, body).pipe(
             tap((response: any) => {
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('expires_at', response.expiresIn);
@@ -28,7 +28,7 @@ export class AuthService {
         const headers = new HttpHeaders({
             Authorization: this.getAuthorizationHeader()
           });
-        return this.http.get(`/Profile/GetRoles` ,{headers}).pipe(
+        return this.http.get(`/api/Profile/GetRoles` ,{headers}).pipe(
             tap((response: any) => {
                 return response;
             })

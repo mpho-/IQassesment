@@ -1,14 +1,18 @@
+using Abp.MimeTypes;
 using ACMEIndustries.Models;
 using AutoMapper;
 using BusinessLogic;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
+using System.Reflection;
 using System.Security.Claims;
 using WebAPI.Models;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebAPI.Controllers
 {
-    [Authorize(Roles = "Manager")]
+   // [Authorize(Roles = "Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdministrationController : ControllerBase
@@ -16,12 +20,14 @@ namespace WebAPI.Controllers
         private readonly IConfiguration _config;
         private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
+        private IHostingEnvironment _hostingEnvironment;
 
-        public AdministrationController(IConfiguration config, IUserManager context, IMapper mapper)
+        public AdministrationController(IConfiguration config, IUserManager context, IMapper mapper, IHostingEnvironment env)
         {
             _config = config;
             _userManager = context;
             _mapper = mapper;
+            _hostingEnvironment = env;
         }
 
         [HttpGet]
@@ -31,6 +37,14 @@ namespace WebAPI.Controllers
             var context = HttpContext.Request.Headers;
             var users = _userManager.GetAllUsers();
             return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("GetUserById/{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = _userManager.GetUserById(id);
+            return Ok(user);
         }
 
         [HttpPost]
@@ -92,16 +106,30 @@ namespace WebAPI.Controllers
 
           [HttpPut]
           [Route("UploadImage/{id}")]
-          public async Task<IActionResult> UploadImage(int id)
+          public async Task<IActionResult> UploadImage(IFormFile file, int id)
           {
-            var user = _userManager.GetUserById(id);
+                var user = _userManager.GetUserById(id);
 
-              if (user == null)
-              {
-                  return NotFound();
-              }
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
-              return Ok(user);
+                if (file.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        FileInfo fi = new FileInfo(file.FileName);
+                        var newFileName =  Guid.NewGuid().ToString() +fi.Extension;
+                        var path = Path.Combine(_hostingEnvironment.WebRootPath, @"Resources", newFileName);
+                        user.ProfilePicture = newFileName;
+                        var fs = new FileStream(path, FileMode.Create);
+                        await file.CopyToAsync(fs);
+                        await _userManager.UpdateUserAsync(user);
+                        return Ok(new { FileName = newFileName});
+                    }
+                }
+            return BadRequest();
           }
 
         [HttpPost]
@@ -122,6 +150,14 @@ namespace WebAPI.Controllers
             await _userManager.UpdateUserAsync(updatedUser);
 
             return Ok(model);
+        }
+
+        private async Task CopyStream(Stream stream, string downloadPath)
+        {
+            using (var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write))
+            {
+                await stream.CopyToAsync(fileStream);
+            }
         }
     }
 }

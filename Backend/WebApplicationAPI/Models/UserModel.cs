@@ -13,8 +13,8 @@ namespace WebAPI.Models
         public string Password { get; set; }
         public int Gender { get; set; }
         public int Age { get; set; }
-        public string Address { get; set; }
-        public string ProfilePicture { get; set; }
+        public string? Address { get; set; }
+        public string? ProfilePicture { get; set; }
         public string Role { get; set; }
         public int[] CurrentProjects { get; set; }
         public int[] ReportingLine { get; set; }

@@ -17,14 +17,14 @@ export class UserService {
     const headers = new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeader()
     });
-    return this.http.get<User[]>(`/Administration/GetUsers`, { headers });
+    return this.http.get<User[]>(`/api/Administration/GetUsers`, { headers });
   }
 
   updateUser(user: User): Observable<User> {
     const headers = new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeader()
     });
-    return this.http.put<User>(`/Administration/UpdateUser`, user, { headers }).pipe(
+    return this.http.put<User>(`/api/Administration/UpdateUser`, user, { headers }).pipe(
         tap((updatedUser: User) => console.log(`Updated user ${updatedUser.id}`))
       );
     }
@@ -33,24 +33,44 @@ export class UserService {
     const headers = new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeader()
     });
-    return this.http.get<User>(`/Profile/Get`, { headers });
+    return this.http.get<User>(`/api/Profile/Get`, { headers });
   }
 
   createUser(user: User): Observable<User> {
     const headers = new HttpHeaders({
       Authorization: this.authService.getAuthorizationHeader()
     });
-    return this.http.post<User>(`/Administration/CreateUser`, user, { headers }).pipe(
+    return this.http.post<User>(`/api/Administration/CreateUser`, user, { headers }).pipe(
       tap((createdUser: User) => console.log(`Created user ${createdUser.id}`))
     );
   }
   
-    deleteUser(user: User): Observable<User> {
-      const headers = new HttpHeaders({
-        Authorization: this.authService.getAuthorizationHeader()
-      });
-      return this.http.delete<User>(`/Administration/DeleteUser/${user.id}`, { headers }).pipe(
-        tap(() => console.log(`Deleted user ${user.id}`))
-      );
-    }
+  deleteUser(user: User): Observable<User> {
+    const headers = new HttpHeaders({
+      Authorization: this.authService.getAuthorizationHeader()
+    });
+    return this.http.delete<User>(`/api/Administration/DeleteUser/${user.id}`, { headers }).pipe(
+      tap(() => console.log(`Deleted user ${user.id}`))
+    );
   }
+
+  getUserById(id: number): Observable<User> {
+    const headers = new HttpHeaders({
+      Authorization: this.authService.getAuthorizationHeader()
+    });
+    return this.http.get<User>(`/api/Administration/GetUserById/`+id, { headers }).pipe(
+      tap((createdUser: User) => console.log(`retrieved user ${createdUser.id}`))
+    );
+  }
+
+  uploadById(id: number, fileToUpload: File): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: this.authService.getAuthorizationHeader()
+    });
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    return this.http.put(`/api/Administration/UploadImage/`+id, formData, { headers }).pipe(
+      tap(() => console.log(`image uploaded`))
+    );
+  }
+}

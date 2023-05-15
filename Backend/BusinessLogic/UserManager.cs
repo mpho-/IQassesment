@@ -58,10 +58,12 @@ namespace BusinessLogic
 
         public async Task CreateUserAsync(User user)
         {
+            var foundUser = _context.Json.Users
+                 .FirstOrDefault(x => x.EmailAddress == user.EmailAddress);
 
-            if (user != null)
+            if (foundUser == null)
             {
-                user.Id = _context.Json.Users.Count();
+                user.Id = _context.Json.Users.Count() + 1;
                 _context.Json.Users.Add(user);
             }
 

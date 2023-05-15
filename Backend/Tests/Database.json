@@ -2,24 +2,50 @@
   "Users": [
     {
       "Id": 1,
-      "FirstName": "Mpho",
-      "Lastname": "Mathivha",
-      "EmailAddress": "mpho@example.com",
+      "FirstName": "Mr",
+      "Lastname": "Manager",
+      "EmailAddress": "manager@example.com",
       "Password": "test",
-      "DateCreated": "2009-05-08 14:40:52",
-      "Roles": [ "Mananger" ]
+      "Age": 36,
+      "Gender": 0,
+      "Address": null,
+      "ProfilePicture": null,
+      "Role": "Manager",
+      "ReportingLine": [],
+      "CurrentProjects": []
+    },
+    {
+      "Id": 2,
+      "FirstName": "Mr",
+      "Lastname": "Employee",
+      "EmailAddress": "Employee@example.com",
+      "Password": "test",
+      "Age": 27,
+      "Gender": 0,
+      "Address": null,
+      "ProfilePicture": null,
+      "Role": "Employee",
+      "ReportingLine": [ 1 ],
+      "CurrentProjects": [ 1 ]
     }
   ],
   "Roles": [
     {
+      "Id":  1,
       "Name": "Manager"
     },
     {
+      "Id": 2,
       "Name": "Employee"
     }
   ],
   "Projects": [
     {
+      "Id": 1,
+      "Name": "Manager"
+    },
+    {
+      "Id": 1,
       "Name": "Manager"
     }
   ]

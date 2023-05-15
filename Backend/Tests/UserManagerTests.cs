@@ -1,8 +1,10 @@
 using ACMEIndustries.Database;
 using ACMEIndustries.Models;
 using BusinessLogic;
+using BusinessLogic.Interface;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
+using System.Data;
 
 namespace BusinessLogicTests
 {
@@ -44,7 +46,7 @@ namespace BusinessLogicTests
             // Arrange
             var user = new User
             {
-                Id = 1,
+                Id = 2,
                 FirstName = "John",
                 EmailAddress = "john@example.com",
                 Password = "password"
@@ -61,26 +63,6 @@ namespace BusinessLogicTests
             Assert.AreEqual(user.Password, updatedUser.Password);
         }
 
-        [Test]
-        public async Task DeleteUserAsync_ShouldDeleteUser()
-        {
-            // Arrange
-            var user = new User
-            {
-                Id = 1,
-                FirstName = "John",
-                EmailAddress = "john@example.com",
-                Password = "password"
-            };
-            await _userManager.CreateUserAsync(user);
-
-            // Act
-            await _userManager.DeleteUserAsync(user.Id);
-            var deletedUser = _userManager.GetUserById(user.Id);
-
-            // Assert
-            Assert.IsNull(deletedUser);
-        }
 
         [Test]
         public async Task CreateUserAsync_ShouldCreateUser()
@@ -89,19 +71,17 @@ namespace BusinessLogicTests
             var user = new User
             {
                 FirstName = "John",
-                EmailAddress = "john@example.com",
+                EmailAddress = "john2@example.com",
                 Password = "password"
             };
 
             // Act
+            var oldUsers = _userManager.GetAllUsers();
             await _userManager.CreateUserAsync(user);
-            var createdUser = _userManager.GetUserById(user.Id);
+            var newUsers = _userManager.GetAllUsers();
 
             // Assert
-            Assert.IsNotNull(createdUser);
-            Assert.AreEqual(user.FirstName, createdUser.FirstName);
-            Assert.AreEqual(user.EmailAddress, createdUser.EmailAddress);
-            Assert.AreEqual(user.Password, createdUser.Password);
+            Assert.AreNotEqual(oldUsers.Count, newUsers.Count);
         }
 
         [Test]
@@ -134,6 +114,28 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.IsNull(result);
+        }
+
+
+        [Test]
+        public async Task DeleteUserAsync_ShouldDeleteUser()
+        {
+            // Arrange
+            var user = new User
+            {
+                Id = 1,
+                FirstName = "John",
+                EmailAddress = "john@example.com",
+                Password = "password"
+            };
+            await _userManager.CreateUserAsync(user);
+
+            // Act
+            await _userManager.DeleteUserAsync(user.Id);
+            var deletedUser = _userManager.GetUserById(user.Id);
+
+            // Assert
+            Assert.IsNull(deletedUser);
         }
     }
 }

@@ -6,11 +6,15 @@ import { LoginComponent } from './core/components/login/login.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
 import { AuthGuard } from './core/guards/AuthGuard';
 import { RoleGuard } from './core/guards/RoleGuard';
+import { RoleComponent } from './core/components/roles/roles.component';
+import { CreateRoleComponent } from './core/components/create-role/create-role.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'administration', component: AdministrationComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
+  { path: 'roles', component: RoleComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
+  { path: 'create-role', component: CreateRoleComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
+  { path: 'users', component: AdministrationComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
   { path: 'create-edit', component: CreateEditUserComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
   { path: 'create-edit/:id', component: CreateEditUserComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['Manager'] } },
 ];

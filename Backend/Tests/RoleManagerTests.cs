@@ -15,7 +15,10 @@ namespace BusinessLogicTests
         public void Setup()
         {
             var configuration = new ConfigurationBuilder().Build();
-            _roleManager = new RolesManager(new ApplicationDbContext(), configuration);
+            var context = new ApplicationDbContext();
+            CreateContext(context);
+
+            _roleManager = new RolesManager(context, configuration);
         }
 
         [Test]
@@ -27,6 +30,7 @@ namespace BusinessLogicTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOf(typeof(List<Role>), result);
+            Assert.Greater(result.Count(), 0);
         }
 
 
@@ -46,6 +50,18 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.AreNotEqual(oldRoles.Count, newRoles.Count);
+        }
+
+        private void CreateContext(ApplicationDbContext jsonContext)
+        {
+            jsonContext.Json = new JsonDbContext()
+            {
+                Roles = new List<Role>
+                {
+                    new Role { Name = "Test", Id = 1}
+                },
+                Users = new List<User>()
+            };
         }
     }
 }

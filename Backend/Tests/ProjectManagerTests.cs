@@ -15,7 +15,10 @@ namespace BusinessLogicTests
         public void Setup()
         {
             var configuration = new ConfigurationBuilder().Build();
-            _profileManager = new ProjectManager(new ApplicationDbContext(), configuration);
+            var context = new ApplicationDbContext();
+            CreateContext(context);
+
+            _profileManager = new ProjectManager(context, configuration);
         }
 
         [Test]
@@ -27,6 +30,7 @@ namespace BusinessLogicTests
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOf(typeof(List<Project>), result);
+            Assert.Greater(result.Count(), 0);
         }
 
 
@@ -46,6 +50,19 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.AreNotEqual(oldProjects.Count, newProjects.Count);
+        }
+
+        private void CreateContext(ApplicationDbContext jsonContext)
+        {
+            jsonContext.Json = new JsonDbContext()
+            {
+                Projects = new List<Project>
+                {
+                    new Project { Name = "Test", Id = 1}
+                },
+                Roles = new List<Role>(),
+                Users = new List<User>()
+            };
         }
     }
 }

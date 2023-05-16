@@ -10,42 +10,41 @@ namespace BusinessLogicTests
     [TestFixture]
     public class LookUpManagerTests
     {
-        private IProjectManager _profileManager;
+        private ILookUpManager _lookUpManager;
         [SetUp]
         public void Setup()
         {
             var configuration = new ConfigurationBuilder().Build();
-            _profileManager = new ProjectManager(new ApplicationDbContext(), configuration);
+            var context = new ApplicationDbContext();
+            CreateContext(context);
+
+            _lookUpManager = new LookUpManager(context, configuration);
         }
 
         [Test]
-        public void GetAllProjects_ShouldReturnAllProjects()
+        public void GetAllLookUp_ShouldReturnAllGenders()
         {
             // Act
-            var result = _profileManager.GetProjects();
+            var result = _lookUpManager.GetGenders();
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf(typeof(List<Project>), result);
+            Assert.IsInstanceOf(typeof(List<Gender>), result);
+            Assert.Greater(result.Count(), 0);
         }
 
-
-        [Test]
-        public async Task CreateProjectAsync_ShouldCreateProject()
+        private void CreateContext(ApplicationDbContext jsonContext)
         {
-            // Arrange
-            var project = new Project
+            jsonContext.Json = new JsonDbContext()
             {
-                Name = "John2"
+                Projects = new List<Project>(),
+                Genders = new List<Gender> 
+                { 
+                    new Gender { Name = "Test", Id = 1}
+                },
+                Roles = new List<Role>(),
+                Users = new List<User>()
             };
-
-            // Act
-            var oldProjects = _profileManager.GetProjects();
-            await _profileManager.AddProject(project.Name);
-            var newProjects = _profileManager.GetProjects();
-
-            // Assert
-            Assert.AreNotEqual(oldProjects.Count, newProjects.Count);
         }
     }
 }

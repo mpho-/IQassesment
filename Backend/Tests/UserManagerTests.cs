@@ -16,7 +16,10 @@ namespace BusinessLogicTests
         public void Setup()
         {
             var configuration = new ConfigurationBuilder().Build();
-            _userManager = new UserManager(new ApplicationDbContext(), configuration);
+            var context = new ApplicationDbContext();
+            CreateContext(context);
+
+            _userManager = new UserManager(context, configuration);
         }
 
         [Test]
@@ -46,7 +49,7 @@ namespace BusinessLogicTests
             // Arrange
             var user = new User
             {
-                Id = 2,
+                Id = 1,
                 FirstName = "John",
                 EmailAddress = "john@example.com",
                 Password = "password"
@@ -136,6 +139,23 @@ namespace BusinessLogicTests
 
             // Assert
             Assert.IsNull(deletedUser);
+        }
+
+        private void CreateContext(ApplicationDbContext jsonContext)
+        {
+            jsonContext.Json = new JsonDbContext()
+            {
+                Users = new List<User>
+                {
+                    new User
+                    {
+                        Id = 1,
+                        FirstName = "John4",
+                        EmailAddress = "john4@example.com",
+                        Password = "password"
+                    }
+                }
+            };
         }
     }
 }

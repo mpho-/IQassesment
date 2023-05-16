@@ -43,9 +43,6 @@
     <Content Update="wwwroot\Resources\default-avatar.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\Resources\pexels-photo-2379004.jpeg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse}
 import {Observable, catchError, map, throwError} from 'rxjs';
 import { environment } from '../environments/environment';
 import swal from 'sweetalert2';
+import { identifierName } from '@angular/compiler';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -15,11 +16,16 @@ export class APIInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
           let errorMsg = '';
-          if (error.error instanceof ErrorEvent) {
+          if (typeof error.error == 'string') {
+            errorMsg = `Error Code: ${error.status},  Message: ${error.error}`;
+          } 
+          else if (error.error instanceof ErrorEvent) {
               errorMsg = `Error: ${error.error.message}`;
           } else {
               errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
           }
+         
+
           swal.fire({
             icon: 'error',
             title: 'Oops...',

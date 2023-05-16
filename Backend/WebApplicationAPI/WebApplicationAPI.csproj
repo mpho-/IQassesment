@@ -37,6 +37,12 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\Resources\322cc769-2d50-41a4-8c0a-1259fef3c176.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Resources\default-avatar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Resources\pexels-photo-2379004.jpeg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var currentUser = _mapper.Map<UserModel>(profile);
+            var currentUser = _mapper.Map<User>(profile);
 
             return Ok(currentUser);
         }

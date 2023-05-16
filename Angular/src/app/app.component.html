@@ -18,6 +18,9 @@
           <li *ngIf="isSignedIn" class="nav-item">
             <a class="nav-link" routerLink="/roles">Roles</a>
           </li>
+          <li *ngIf="isSignedIn" class="nav-item">
+            <a class="nav-link" (click)="logout()">Signout</a>
+          </li>
       </ul>
   </div>
 </nav>

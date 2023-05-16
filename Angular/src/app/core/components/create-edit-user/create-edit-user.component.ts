@@ -4,11 +4,13 @@ import { UserService } from '../../services/UserService';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from '../../models/Role';
 import { RoleService } from '../../services/RoleService';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Project } from '../../models/Project';
 import { ProjectService } from '../../services/ProjectService';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment.prod';
+import { LookUpService } from '../../services/LookupService';
+import { firstValueFrom } from 'rxjs';
+import { Gender } from '../../models/Gender';
 
 @Component({
   selector: 'app-create-edit-user',
@@ -18,7 +20,8 @@ import { environment } from 'src/environments/environment.prod';
 export class CreateEditUserComponent implements OnInit {
   roles: Role[] = [];
   projects: Project[] = [];
-  selected: Project[] = [];
+  selectedProjects: Project[] = [];
+  genders: Gender[] = [];
   selectedUser: User = new User();
   users: User[] = [];
   userId! :number;
@@ -29,59 +32,52 @@ export class CreateEditUserComponent implements OnInit {
   constructor(private userService: UserService,
     private route: ActivatedRoute,
     private roleService: RoleService,
+    private lookupService: LookUpService,
     private projectService: ProjectService) { 
      
     }
 
-  ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    if(id){
+    this.projects = await firstValueFrom(this.projectService.getAllProjects());
+    this.users = await firstValueFrom(this.userService.getAllUsers());
+    this.roles = await firstValueFrom(this.roleService.getAllRoles());
+    this.genders = await firstValueFrom(this.lookupService.getAllGenders());
+
+    if (id){
       this.userService.getUserById(Number(id)).subscribe(user => {
-        this.selectedUser = user;
-        this.userId = Number(id);
-        this.projectService.getAllProjects().subscribe(projects => {
-          this.projects = projects;
-          this.uploadUrl = environment.baseUrl +'/Resources/'+ user.profilePicture;
+          this.userId = Number(id);
+          this.selectedUser = user;
+          this.uploadUrl = environment.baseUrl + "/Resources/"+ user.profilePicture;
           this.fillSelectedProjects();
-        });
-        this.userService.getAllUsers().subscribe(users => {
-          this.users = users;
           this.fillSelectedUsers();
-        });
       });
-    }
-    else
-    {
-      this.projectService.getAllProjects().subscribe(projects => {
-        this.projects = projects;
-      });
-      this.userService.getAllUsers().subscribe(users => {
-        this.users = users;
-        this.fillSelectedUsers();
-      });
+      return;
     }
 
-    this.roleService.getAllRoles().subscribe(roles=> {
-      this.roles = roles;
-    });
+    this.fillSelectedProjects();
+    this.fillSelectedUsers();
   }
 
   fillSelectedProjects() {
     if(this.selectedUser.currentProjects != null) {
-      this.selected = this.projects.filter(val =>{ return !this.selectedUser.currentProjects.includes(val.id) });
+      this.selectedProjects = this.projects.filter(val =>{ 
+        return this.selectedUser.currentProjects.includes(val.id) 
+      });
     }
   }
 
   fillSelectedUsers() {
     if(this.selectedUser.reportingLine != null) {
       this.selectedUsers = this.users.filter(val =>{
-        return !this.selectedUser.reportingLine.includes(val.id) 
+        return this.selectedUser.reportingLine.includes(val.id) 
       });
     }
   }
 
   createOrUpdateUser() {
-    this.selectedUser.currentProjects = this.selected.map(val => val.id);
+    this.selectedUser.currentProjects = this.selectedProjects.map(val => val.id);
+    this.selectedUser.reportingLine = this.selectedUsers.map(val => val.id);
 
     if (this.userId) {
       this.userService.updateUser(this.selectedUser).subscribe(user => {
@@ -115,7 +111,7 @@ export class CreateEditUserComponent implements OnInit {
     if (this.file) {
       this.userService.uploadById(this.userId ,this.file).subscribe(resp => {
         this.uploadUrl = environment.baseUrl + "/Resources/"+ resp.fileName;
-        this.selectedUser.profilePicture = this.uploadUrl;
+        this.selectedUser.profilePicture = resp.fileName;
         event.target.value = "";
       });
     }

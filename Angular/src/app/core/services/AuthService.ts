@@ -37,6 +37,8 @@ export class AuthService {
 
     logout(): void {
         localStorage.removeItem('token');
+        localStorage.removeItem('expires_at');
+        localStorage.removeItem('role');
     }
 
     signedIn(): Observable<boolean> {

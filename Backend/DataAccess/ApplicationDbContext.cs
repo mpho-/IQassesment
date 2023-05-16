@@ -1,4 +1,5 @@
 ﻿using ACMEIndustries.Models;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -7,9 +8,12 @@ namespace ACMEIndustries.Database
     public class ApplicationDbContext : IApplicationDbContext
     {
         public JsonDbContext Json { get; set; }
-        public ApplicationDbContext()
+
+        private IHostingEnvironment _hostingEnvironment;
+        public ApplicationDbContext(IHostingEnvironment env)
         {
             Json = GetContext();
+            _hostingEnvironment = env;
         }
         public async Task SaveContextAsync()
         {
@@ -21,6 +25,7 @@ namespace ACMEIndustries.Database
         {
             using (StreamReader r = new StreamReader("Database.json"))
             {
+
                 string json = r.ReadToEnd();
                 return JsonConvert.DeserializeObject<JsonDbContext>(json);
             }

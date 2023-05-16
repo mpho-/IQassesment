@@ -1,18 +1,14 @@
-using Abp.MimeTypes;
 using ACMEIndustries.Models;
 using AutoMapper;
 using BusinessLogic;
-using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Constraints;
-using System.Reflection;
-using System.Security.Claims;
 using WebAPI.Models;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebAPI.Controllers
 {
-   // [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdministrationController : ControllerBase
@@ -55,21 +51,16 @@ namespace WebAPI.Controllers
 
             if (user != null)
             {
-                return Conflict();
+                return Conflict("User already exists!");
             }
 
-            user = new User
-            {
-                EmailAddress = model.EmailAddress,
-                Password = model.Password,
-                Role = model.Role
-            };
+            var createdUser = _mapper.Map<User>(model);
 
-            await _userManager.UpdateUserAsync(user);
+            await _userManager.CreateUserAsync(createdUser);
 
             return Ok(user);
         }
-       
+
         [HttpPut]
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UserModel model)
@@ -88,68 +79,48 @@ namespace WebAPI.Controllers
             return Ok(model);
         }
 
-          [HttpDelete]
-          [Route("DeleteUser/{id}")]
-          public async Task<IActionResult> DeleteUser(int id)
-          {
-              var user = _userManager.GetUserById(id);
-
-                if (user == null)
-                {
-                  return NotFound();
-                }
-
-                await _userManager.DeleteUserAsync(id);
-
-                return Ok();
-          }
-
-          [HttpPut]
-          [Route("UploadImage/{id}")]
-          public async Task<IActionResult> UploadImage(IFormFile file, int id)
-          {
-                var user = _userManager.GetUserById(id);
-
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                if (file.Length > 0)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        FileInfo fi = new FileInfo(file.FileName);
-                        var newFileName =  Guid.NewGuid().ToString() +fi.Extension;
-                        var path = Path.Combine(_hostingEnvironment.WebRootPath, @"Resources", newFileName);
-                        user.ProfilePicture = newFileName;
-                        var fs = new FileStream(path, FileMode.Create);
-                        await file.CopyToAsync(fs);
-                        await _userManager.UpdateUserAsync(user);
-                        return Ok(new { FileName = newFileName});
-                    }
-                }
-            return BadRequest();
-          }
-
-        [HttpPost]
-        [Route("CreateRole")]
-        public async Task<IActionResult> UpdateProfile(UserModel model)
+        [HttpDelete]
+        [Route("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid);
+            var user = _userManager.GetUserById(id);
 
-            var profile = _userManager.GetUserById(int.Parse(userId.Value));
-
-            if (profile == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            var updatedUser = _mapper.Map<User>(model);
+            await _userManager.DeleteUserAsync(id);
 
-            await _userManager.UpdateUserAsync(updatedUser);
+            return Ok();
+        }
 
-            return Ok(model);
+        [HttpPut]
+        [Route("UploadImage/{id}")]
+        public async Task<IActionResult> UploadImage(IFormFile file, int id)
+        {
+            var user = _userManager.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    FileInfo fi = new FileInfo(file.FileName);
+                    var newFileName = Guid.NewGuid().ToString() + fi.Extension;
+                    var path = Path.Combine(_hostingEnvironment.WebRootPath, @"Resources", newFileName);
+                    user.ProfilePicture = newFileName;
+                    var fs = new FileStream(path, FileMode.Create);
+                    await file.CopyToAsync(fs);
+                    await _userManager.UpdateUserAsync(user);
+                    return Ok(new { FileName = newFileName });
+                }
+            }
+            return BadRequest();
         }
 
         private async Task CopyStream(Stream stream, string downloadPath)

@@ -7,7 +7,7 @@
       "EmailAddress": "manager@example.com",
       "Password": "test",
       "Age": 36,
-      "Gender": 0,
+      "Gender": 1,
       "Address": null,
       "ProfilePicture": null,
       "Role": "Manager",
@@ -25,8 +25,8 @@
       "Address": null,
       "ProfilePicture": null,
       "Role": "Employee",
-      "ReportingLine": [1],
-      "CurrentProjects": [1]
+      "ReportingLine": [ 1 ],
+      "CurrentProjects": [ 1 ]
     }
   ],
   "Roles": [
@@ -44,6 +44,30 @@
       "Id": 1,
       "Name": "First project",
       "Description": "This is the first project"
+    },
+    {
+      "Id": 2,
+      "Name": "Second project",
+      "Description": "This is the first project"
+    },
+    {
+      "Id": 3,
+      "Name": "Third project",
+      "Description": "This is the first project"
+    }
+  ],
+  "Genders": [
+    {
+      "Id": 1,
+      "Name": "Female"
+    },
+    {
+      "Id": 2,
+      "Name": "Male"
+    },
+    {
+      "Id": 3,
+      "Name": "Other"
     }
   ]
 }

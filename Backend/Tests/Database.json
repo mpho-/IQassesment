@@ -21,7 +21,7 @@
       "EmailAddress": "Employee@example.com",
       "Password": "test",
       "Age": 27,
-      "Gender": 0,
+      "Gender": 2,
       "Address": null,
       "ProfilePicture": null,
       "Role": "Employee",

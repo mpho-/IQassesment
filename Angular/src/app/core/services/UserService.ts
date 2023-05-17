@@ -25,7 +25,7 @@ export class UserService {
       Authorization: this.authService.getAuthorizationHeader()
     });
     return this.http.put<User>(`/api/Administration/UpdateUser`, user, { headers }).pipe(
-        tap((updatedUser: User) => console.log(`Updated user ${updatedUser.id}`))
+        tap((updatedUser: User) => console.log(`Updated user ${updatedUser}`))
       );
     }
 
@@ -41,7 +41,7 @@ export class UserService {
       Authorization: this.authService.getAuthorizationHeader()
     });
     return this.http.post<User>(`/api/Administration/CreateUser`, user, { headers }).pipe(
-      tap((createdUser: User) => console.log(`Created user ${createdUser.id}`))
+      tap((createdUser: User) => console.log(`Created user ${createdUser}`))
     );
   }
   
@@ -50,7 +50,7 @@ export class UserService {
       Authorization: this.authService.getAuthorizationHeader()
     });
     return this.http.delete<User>(`/api/Administration/DeleteUser/${user.id}`, { headers }).pipe(
-      tap(() => console.log(`Deleted user ${user.id}`))
+      tap(() => console.log(`Deleted user ${user}`))
     );
   }
 
@@ -59,7 +59,7 @@ export class UserService {
       Authorization: this.authService.getAuthorizationHeader()
     });
     return this.http.get<User>(`/api/Administration/GetUserById/`+id, { headers }).pipe(
-      tap((createdUser: User) => console.log(`retrieved user ${createdUser.id}`))
+      tap((createdUser: User) => console.log(`retrieved user ${createdUser}`))
     );
   }
 

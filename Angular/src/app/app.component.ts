@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
   isSignedIn: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) {
-    
   }
 
   ngOnInit() {
@@ -33,5 +32,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate([""]);
+  }
+
+  IsManager() {
+    return this.authService.hasPermission("Manager");
   }
 }

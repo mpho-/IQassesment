@@ -55,5 +55,13 @@ export class AuthService {
         const expiration = localStorage.getItem("expires_at")!;
         const expiresAt = Date.parse(expiration);
         return moment(expiresAt);
-    } 
+    }
+
+    hasPermission(role: string) {
+        if (role == localStorage.getItem("role"))
+        {   
+            return true;
+        }
+        return false;
+    }
 }

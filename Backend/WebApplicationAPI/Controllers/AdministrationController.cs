@@ -27,6 +27,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("GetUsers")]
         public async Task<IActionResult> GetUsers()
         {

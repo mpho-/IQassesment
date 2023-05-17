@@ -1,27 +1,27 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary flex-column flex-md-row bd-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-  <a class="navbar-brand" href="#">{{title}}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-      <ul class="navbar-nav">
+    <a class="navbar-brand" href="#">{{title}}</a>
+
+    <div class="navbar-collapse collapse show" id="ftco-nav" style="">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item" *ngIf="!isSignedIn">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
-          <li *ngIf="isSignedIn"class="nav-item">
-            <a class="nav-link" routerLink="/profile">Profile</a>
-          </li>
-          <li *ngIf="isSignedIn" class="nav-item">
-            <a class="nav-link" routerLink="/users">Users</a>
-          </li>
-          <li *ngIf="isSignedIn" class="nav-item">
-            <a class="nav-link" routerLink="/roles">Roles</a>
-          </li>
-          <li *ngIf="isSignedIn" class="nav-item">
-            <a class="nav-link" (click)="logout()">Signout</a>
-          </li>
+        <li *ngIf="isSignedIn"class="nav-item">
+          <a class="nav-link" routerLink="/profile">Profile</a>
+        </li>
+        <li *ngIf="isSignedIn && IsManager()" class="nav-item">
+          <a class="nav-link" routerLink="/users">Users</a>
+        </li>
+        <li *ngIf="isSignedIn && IsManager()" class="nav-item">
+          <a class="nav-link" routerLink="/roles">Roles</a>
+        </li>
+        <li *ngIf="isSignedIn" class="nav-item">
+          <a class="nav-link" (click)="logout()">Signout</a>
+        </li>
       </ul>
+    </div>
   </div>
 </nav>
 

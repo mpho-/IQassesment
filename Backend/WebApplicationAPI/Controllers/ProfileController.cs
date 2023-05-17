@@ -3,7 +3,6 @@ using AutoMapper;
 using BusinessLogic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 using System.Security.Claims;
 using WebAPI.Models;
 

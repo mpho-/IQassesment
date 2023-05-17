@@ -9,8 +9,10 @@
               <div class="mt-3">
                 <h5>{{ user!.firstName }} {{user!.lastName }}, {{ user!.age }}, {{selectedGender}}</h5>
                 <p class="text-secondary mb-1">{{user.role}}</p>
-                <p class="text-muted font-size-sm">{{user.emailAddress}}</p> 
-                 Reporting To: <span class="btn btn-outline-info btn-sm mx-1" *ngFor="let manager of selectedUsers">{{ manager.firstName }} {{ manager.lastName }}</span>
+                <p class="text-muted font-size-sm">{{user.emailAddress}}</p>
+                <p class="text-muted font-size-sm"> Reporting To:</p> 
+                 <span class="btn btn-outline-info btn-sm mx-1" *ngFor="let manager of selectedUsers">{{ manager.firstName }} {{ manager.lastName }}</span>
+                 <div *ngIf="selectedUsers?.length == 0" class="alert alert-info" role="alert"> No Managers assinged</div>
                  <p class="text-muted font-size-sm">{{user.address}}</p> 
               </div>
             </div>
